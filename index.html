@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>vCard posjetnice s QR kodom</title>
 <meta name="description" content="Napravi posjetnicu s QR kodom koji sprema kontakt u mobitel (vCard). Predlošci, logo, ispis 10 na A4, PNG i .vcf. Besplatno, u pregledniku.">
-<link rel="icon" href="zajednicko/logo.svg">
+<link rel="icon" href="zajednicko/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="zajednicko/apple-touch-icon.png">
 <link rel="stylesheet" href="zajednicko/app-bonic.css">
 <style>
   .raspored { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); align-items: start; }
@@ -13,8 +14,8 @@
   .kartica-prikaz { background: repeating-conic-gradient(var(--polje) 0 25%, var(--plo) 0 50%) 0 0 / 20px 20px; border-radius: 12px; padding: 22px; display: grid; place-items: center; border: 1px solid var(--crta); }
   .kartica-prikaz svg { width: 100%; max-width: 520px; height: auto; box-shadow: 0 10px 30px rgb(0 0 0 / .18); border-radius: 6px; }
   .predlosci { display: flex; gap: 8px; flex-wrap: wrap; }
-  .predlosci button { padding: 7px 13px; border-radius: 999px; border: 1px solid var(--crta); background: var(--plo); cursor: pointer; font-weight: 600; font-size: 13.5px; }
-  .predlosci button[aria-pressed="true"] { border-color: var(--akcent); background: var(--akcent-meko); color: var(--akcent-jak); }
+  .predlosci button { padding: 7px 14px; border-radius: 8px; border: 2px solid rgb(22 48 92 / .15); background: #fff; color: var(--plava); cursor: pointer; font-weight: 800; font-size: 14px; }
+  .predlosci button[aria-pressed="true"] { border-color: var(--plava); background: var(--plava); color: #fff; }
   .boje-red { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
   .arak-ispis { display: none; }
   @media print {
@@ -66,7 +67,7 @@
             <button type="button" data-predlozak="sredina">Centrirana</button>
           </div>
           <div class="boje-red">
-            <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input type="color" id="boja" data-p="boja" value="#3b5bfd"><span>Boja naglaska</span></label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input type="color" id="boja" data-p="boja" value="#16305c"><span>Boja naglaska</span></label>
             <button type="button" class="gumb" id="logoGumb"><span data-ik="slika"></span>Dodaj logo</button>
             <button type="button" class="gumb tekstualni" id="logoMakni" hidden>Makni logo</button>
           </div>

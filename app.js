@@ -4,7 +4,7 @@ qrcode.stringToBytes = s => Array.from(new TextEncoder().encode(s));
 
 const KLJUC = 'vcard-posjetnica';
 const POLJA = ['ime', 'prezime', 'titula', 'tvrtka', 'mob', 'tel', 'email', 'web', 'ulica', 'pbr', 'grad', 'boja'];
-const PRIMJER = { ime: 'Ana', prezime: 'Kovač', titula: 'Voditeljica projekata', tvrtka: 'Primjer d.o.o.', mob: '+385 91 234 5678', tel: '', email: 'ana.kovac@primjer.hr', web: 'www.primjer.hr', ulica: 'Ilica 1', pbr: '10000', grad: 'Zagreb', boja: '#3b5bfd' };
+const PRIMJER = { ime: 'Ana', prezime: 'Kovač', titula: 'Voditeljica projekata', tvrtka: 'Primjer d.o.o.', mob: '+385 91 234 5678', tel: '', email: 'ana.kovac@primjer.hr', web: 'www.primjer.hr', ulica: 'Ilica 1', pbr: '10000', grad: 'Zagreb', boja: '#16305c' };
 let S = { ...PRIMJER, predlozak: 'klasicna', logo: null, ...lokalno.uzmi(KLJUC, {}) };
 
 // ---------------- vCard ----------------
@@ -92,13 +92,13 @@ const PREDLOSCI = {
   },
   tamna() {
     const n = kontakti().length;
-    return `<rect width="85" height="55" fill="#0f172a"/><rect x="0" y="0" width="85" height="1.4" fill="${S.boja}"/>
+    return `<rect width="85" height="55" fill="${S.boja}"/><rect width="85" height="55" fill="#000" opacity=".18"/><rect x="0" y="0" width="85" height="1.6" fill="#d42a34"/>
       ${logo(56, 5, 24, 9)}
       ${tekst(imePrezime(), 6, 12.5, 5, { boja: '#fff', deb: 700, maks: S.logo ? 48 : 73 })}
-      ${tekst(S.titula, 6, 17.3, 2.7, { boja: S.boja, deb: 600, maks: 73 })}
-      ${tekst(S.tvrtka, 6, 21, 2.6, { boja: '#cbd5e1', maks: 73 })}
-      ${kontaktiSvg(6, 55 - 5.5 - (n - 1) * 4.1, 50, { boja: '#e2e8f0' })}
-      ${qrSvg(59, 29, 21, '#0f172a', '#fff')}`;
+      ${tekst(S.titula, 6, 17.3, 2.7, { boja: '#f3b4b8', deb: 600, maks: 73 })}
+      ${tekst(S.tvrtka, 6, 21, 2.6, { boja: '#d5dcea', maks: 73 })}
+      ${kontaktiSvg(6, 55 - 5.5 - (n - 1) * 4.1, 50, { boja: '#eef2f9', ikonaBoja: '#f3b4b8' })}
+      ${qrSvg(59, 29, 21, '#0c1d3d', '#fff')}`;
   },
   sredina() {
     const n = kontakti().length, y0 = S.logo ? 17 : 12.5;
