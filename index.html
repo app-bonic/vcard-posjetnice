@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>vCard posjetnice s QR kodom</title>
+<meta name="description" content="Napravi posjetnicu s QR kodom koji sprema kontakt u mobitel (vCard). Predlošci, logo, ispis 10 na A4, PNG i .vcf. Besplatno, u pregledniku.">
+<link rel="icon" href="zajednicko/logo.svg">
+<link rel="stylesheet" href="zajednicko/app-bonic.css">
+<style>
+  .raspored { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+  @media (min-width: 980px) { .raspored { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); } .desno { position: sticky; top: 70px; } }
+  .kartica-prikaz { background: repeating-conic-gradient(var(--polje) 0 25%, var(--plo) 0 50%) 0 0 / 20px 20px; border-radius: 12px; padding: 22px; display: grid; place-items: center; border: 1px solid var(--crta); }
+  .kartica-prikaz svg { width: 100%; max-width: 520px; height: auto; box-shadow: 0 10px 30px rgb(0 0 0 / .18); border-radius: 6px; }
+  .predlosci { display: flex; gap: 8px; flex-wrap: wrap; }
+  .predlosci button { padding: 7px 13px; border-radius: 999px; border: 1px solid var(--crta); background: var(--plo); cursor: pointer; font-weight: 600; font-size: 13.5px; }
+  .predlosci button[aria-pressed="true"] { border-color: var(--akcent); background: var(--akcent-meko); color: var(--akcent-jak); }
+  .boje-red { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .arak-ispis { display: none; }
+  @media print {
+    @page { size: A4; margin: 0; }
+    body > *:not(.arak-ispis) { display: none !important; }
+    .arak-ispis { display: block; }
+    .arak-ispis svg { display: block; width: 210mm; height: 297mm; }
+  }
+</style>
+</head>
+<body data-alat="vcard-posjetnice">
+<header class="ab-vrh"></header>
+
+<main class="ab-omot">
+  <section class="ab-uvod">
+    <span class="ab-ikona"><span data-ik="kartica"></span></span>
+    <div>
+      <h1>vCard posjetnice s QR kodom</h1>
+      <p>Upiši svoje podatke i dobiješ posjetnicu (85 × 55 mm) s QR kodom — kad ga netko skenira mobitelom, nudi mu se da te spremi u kontakte. Ispiši 10 na A4 ili preuzmi sliku i .vcf datoteku.</p>
+    </div>
+  </section>
+
+  <div class="raspored">
+    <div class="slog">
+      <section class="kartica">
+        <h2>Podaci</h2>
+        <div class="forma">
+          <div class="polje"><label for="ime">Ime</label><input id="ime" data-p="ime" autocomplete="given-name"></div>
+          <div class="polje"><label for="prezime">Prezime</label><input id="prezime" data-p="prezime" autocomplete="family-name"></div>
+          <div class="polje"><label for="titula">Radno mjesto / titula</label><input id="titula" data-p="titula" autocomplete="organization-title"></div>
+          <div class="polje"><label for="tvrtka">Tvrtka / ustanova</label><input id="tvrtka" data-p="tvrtka" autocomplete="organization"></div>
+          <div class="polje"><label for="mob">Mobitel</label><input id="mob" data-p="mob" type="tel" autocomplete="tel"></div>
+          <div class="polje"><label for="tel">Telefon (posao)</label><input id="tel" data-p="tel" type="tel"></div>
+          <div class="polje"><label for="email">E-mail</label><input id="email" data-p="email" type="email" autocomplete="email"></div>
+          <div class="polje"><label for="web">Web stranica</label><input id="web" data-p="web" type="url" placeholder="www.primjer.hr"></div>
+          <div class="polje puno"><label for="ulica">Ulica i broj</label><input id="ulica" data-p="ulica" autocomplete="street-address"></div>
+          <div class="polje"><label for="pbr">Poštanski broj</label><input id="pbr" data-p="pbr" autocomplete="postal-code"></div>
+          <div class="polje"><label for="grad">Grad</label><input id="grad" data-p="grad" autocomplete="address-level2"></div>
+        </div>
+      </section>
+
+      <section class="kartica">
+        <h2>Izgled</h2>
+        <div class="slog" style="gap:12px">
+          <div class="predlosci" id="predlosci">
+            <button type="button" data-predlozak="klasicna">Klasična</button>
+            <button type="button" data-predlozak="traka">S trakom</button>
+            <button type="button" data-predlozak="tamna">Tamna</button>
+            <button type="button" data-predlozak="sredina">Centrirana</button>
+          </div>
+          <div class="boje-red">
+            <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input type="color" id="boja" data-p="boja" value="#3b5bfd"><span>Boja naglaska</span></label>
+            <button type="button" class="gumb" id="logoGumb"><span data-ik="slika"></span>Dodaj logo</button>
+            <button type="button" class="gumb tekstualni" id="logoMakni" hidden>Makni logo</button>
+          </div>
+          <label class="kvacica"><input type="checkbox" id="rezne"><span>Oznake za rezanje na arku za ispis</span></label>
+        </div>
+      </section>
+    </div>
+
+    <div class="slog desno">
+      <section class="kartica">
+        <div class="kartica-prikaz" id="prikaz"></div>
+        <div class="gumbi" style="margin-top:14px">
+          <button type="button" class="gumb glavni" id="ispisi"><span data-ik="ispis"></span>Ispiši 10 na A4</button>
+          <button type="button" class="gumb" id="png"><span data-ik="preuzmi"></span>PNG (300 dpi)</button>
+          <button type="button" class="gumb" id="svg"><span data-ik="preuzmi"></span>SVG</button>
+          <button type="button" class="gumb" id="vcf"><span data-ik="preuzmi"></span>.vcf kontakt</button>
+        </div>
+        <p class="napomena" style="margin-top:10px">Podaci se pamte samo u ovom pregledniku da ih ne moraš ponovno upisivati.</p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<div class="arak-ispis" id="arak"></div>
+<footer class="ab-dno"></footer>
+<script src="zajednicko/app-bonic.js"></script>
+<script src="lib/qrcode.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
